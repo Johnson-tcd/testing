@@ -24,110 +24,174 @@ st.markdown("""
             color: #4a1c61;
             margin-top: 20px;
         }
+        .update-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .update-header {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4a1c61;
+        }
+        .update-date {
+            font-style: italic;
+            color: #666;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # Header
 st.markdown("<div class='header'>🌍 Global Financial Regulations Hub</div>", unsafe_allow_html=True)
 
-# Sample regulatory updates - moved to global scope
+# Sample regulatory updates - moved to global scope with representative images
 updates = [
-    {"Region": "USA", "Update": "SEC Finalizes New Climate Disclosure Rules", "Date": "March 15, 2025", "Image": "https://placehold.co/600x400/purple/white?text=USA+Regulations"},
-    {"Region": "EU", "Update": "ECB Updates Digital Euro Framework", "Date": "March 12, 2025", "Image": "https://placehold.co/600x400/blue/white?text=EU+Regulations"},
-    {"Region": "UK", "Update": "FCA Introduces Enhanced Consumer Protection Rules", "Date": "March 10, 2025", "Image": "https://placehold.co/600x400/red/white?text=UK+Regulations"},
-    {"Region": "China", "Update": "PBOC Announces New Capital Requirements for Digital Banks", "Date": "March 8, 2025", "Image": "https://placehold.co/600x400/gold/black?text=China+Regulations"},
-    {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025", "Image": "https://placehold.co/600x400/red/white?text=Singapore+Regulations"},
-    {"Region": "UAE", "Update": "DFSA Implements New FinTech Regulations", "Date": "March 3, 2025", "Image": "https://placehold.co/600x400/green/white?text=UAE+Regulations"},
-    {"Region": "South America", "Update": "Brazil Updates Securities Regulations", "Date": "March 1, 2025", "Image": "https://placehold.co/600x400/green/yellow?text=Brazil+Regulations"},
-    {"Region": "Germany", "Update": "BaFin Introduces Stricter AML Guidelines", "Date": "February 28, 2025", "Image": "https://placehold.co/600x400/black/gold?text=Germany+Regulations"},
-    {"Region": "France", "Update": "AMF Strengthens Digital Asset Regulations", "Date": "February 25, 2025", "Image": "https://placehold.co/600x400/blue/white?text=France+Regulations"}
+    {"Region": "USA", "Update": "SEC Finalizes New Climate Disclosure Rules", "Date": "March 15, 2025", 
+     "Image": "https://images.unsplash.com/photo-1621944190310-e3cca1564bd7?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Securities and Exchange Commission has finalized rules requiring public companies to disclose climate-related financial risks."},
+    
+    {"Region": "EU", "Update": "ECB Updates Digital Euro Framework", "Date": "March 12, 2025", 
+     "Image": "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The European Central Bank has released a comprehensive framework for the implementation of the Digital Euro."},
+    
+    {"Region": "UK", "Update": "FCA Introduces Enhanced Consumer Protection Rules", "Date": "March 10, 2025", 
+     "Image": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Financial Conduct Authority has implemented new rules to strengthen consumer protection in financial services."},
+    
+    {"Region": "China", "Update": "PBOC Announces New Capital Requirements for Digital Banks", "Date": "March 8, 2025", 
+     "Image": "https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The People's Bank of China has established new capital requirements specifically tailored for digital banking institutions."},
+    
+    {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025", 
+     "Image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Monetary Authority of Singapore has revised its licensing framework for digital asset service providers."},
+    
+    {"Region": "UAE", "Update": "DFSA Implements New FinTech Regulations", "Date": "March 3, 2025", 
+     "Image": "https://images.unsplash.com/photo-1546412414-e1885e51cfa5?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Dubai Financial Services Authority has implemented new regulations to support the growth of FinTech innovation."},
+    
+    {"Region": "Brazil", "Update": "CVM Updates Securities Regulations", "Date": "March 1, 2025", 
+     "Image": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Brazilian Securities Commission has updated regulations to enhance market transparency and investor protection."},
+    
+    {"Region": "Germany", "Update": "BaFin Introduces Stricter AML Guidelines", "Date": "February 28, 2025", 
+     "Image": "https://images.unsplash.com/photo-1560969184-10fe8719e047?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Federal Financial Supervisory Authority has introduced stricter anti-money laundering guidelines for financial institutions."},
+    
+    {"Region": "Japan", "Update": "FSA Strengthens Digital Asset Regulations", "Date": "February 25, 2025", 
+     "Image": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&h=600&fit=crop&auto=format", 
+     "Description": "The Financial Services Agency has strengthened regulations governing digital assets and cryptocurrency exchanges."}
 ]
 
 # Sidebar for navigation
-st.sidebar.image("https://placehold.co/200x200/purple/white?text=Financial+Hub", width=100)
+st.sidebar.image("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=200&h=200&fit=crop&auto=format", width=100)
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"])
 
 if page == "Home":
     st.markdown("<div class='subheader'>Stay ahead with the latest financial regulations</div>", unsafe_allow_html=True)
     
-    # Only show first update by default
+    # Initialize session state for auto-rotation
     if 'update_index' not in st.session_state:
         st.session_state.update_index = 0
+        st.session_state.last_update_time = time.time()
     
-    # Auto-rotate updates if desired
-    auto_rotate = st.checkbox("Auto-rotate updates", value=False)
-    
-    if auto_rotate:
-        placeholder = st.empty()
-        for i in range(len(updates)):
-            with placeholder.container():
-                update = updates[i]
-                st.image(update['Image'], use_column_width=True)
-                st.info(f"#### {update['Region']}\n**{update['Update']}**\n📅 {update['Date']}")
-                time.sleep(3)
-    else:
-        # Manual navigation
-        update = updates[st.session_state.update_index]
-        st.image(update['Image'], use_column_width=True)
-        st.info(f"#### {update['Region']}\n**{update['Update']}**\n📅 {update['Date']}")
-        
-        col1, col2 = st.columns(2)
+    # Function to display a specific update
+    def display_update(update):
+        col1, col2 = st.columns([2, 3])
         with col1:
-            if st.button("Previous") and st.session_state.update_index > 0:
-                st.session_state.update_index -= 1
-                st.rerun()
+            st.image(update['Image'], use_container_width=True)
         with col2:
-            if st.button("Next") and st.session_state.update_index < len(updates) - 1:
-                st.session_state.update_index += 1
-                st.rerun()
+            st.markdown(f"<div class='update-container'>", unsafe_allow_html=True)
+            st.markdown(f"<div class='update-header'>{update['Region']}: {update['Update']}</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='update-date'>📅 {update['Date']}</div>", unsafe_allow_html=True)
+            st.write(update['Description'])
+            st.markdown("</div>", unsafe_allow_html=True)
+    
+    # Create tabs for viewing options
+    tab1, tab2 = st.tabs(["Auto-Rotating Updates", "Browse All Updates"])
+    
+    with tab1:
+        # Auto-rotating updates
+        placeholder = st.empty()
+        
+        # Automatically advance to next update every 5 seconds
+        current_time = time.time()
+        if current_time - st.session_state.last_update_time > 5:
+            st.session_state.update_index = (st.session_state.update_index + 1) % len(updates)
+            st.session_state.last_update_time = current_time
+        
+        # Display current update
+        with placeholder.container():
+            display_update(updates[st.session_state.update_index])
+            st.progress((st.session_state.update_index + 1) / len(updates))
+            st.caption(f"Showing update {st.session_state.update_index + 1} of {len(updates)}")
+    
+    with tab2:
+        # Manual browsing of all updates
+        for update in updates:
+            display_update(update)
+            st.markdown("---")
 
 elif page == "Latest Updates":
     st.write("### Latest Regulation Updates")
-    # Convert updates to DataFrame
+    # Convert updates to DataFrame with additional Description column
     data = pd.DataFrame(updates)
-    # Display only relevant columns
-    st.dataframe(data[["Region", "Update", "Date"]], hide_index=True)
+    # Display relevant columns
+    st.dataframe(data[["Region", "Update", "Date", "Description"]], hide_index=True, use_container_width=True)
+    
+    # Add filter options
+    st.write("### Filter Updates")
+    selected_region = st.multiselect("Filter by Region", options=list(set([u["Region"] for u in updates])))
+    
+    if selected_region:
+        filtered_data = data[data["Region"].isin(selected_region)]
+        st.write(f"### Filtered Results ({len(filtered_data)} updates)")
+        st.dataframe(filtered_data[["Region", "Update", "Date", "Description"]], hide_index=True, use_container_width=True)
 
 elif page == "Regulation Map":
     st.write("### Explore Global Regulations - Interactive Map")
     
-    # Define map data for PyDeck
+    # Define map data for PyDeck with more accurate coordinates and information
     map_data = pd.DataFrame([
-        {"lat": 40.0, "lon": -100.0, "name": "USA", "size": 100},
-        {"lat": 50.0, "lon": 10.0, "name": "EU", "size": 100},
-        {"lat": 55.0, "lon": -2.0, "name": "UK", "size": 100},
-        {"lat": 35.0, "lon": 105.0, "name": "China", "size": 100},
-        {"lat": 1.3, "lon": 103.8, "name": "Singapore", "size": 100},
-        {"lat": 25.2, "lon": 55.3, "name": "UAE", "size": 100},
-        {"lat": -10.0, "lon": -55.0, "name": "South America", "size": 100},
-        {"lat": 51.1, "lon": 10.4, "name": "Germany", "size": 100},
-        {"lat": 48.9, "lon": 2.4, "name": "France", "size": 100}
+        {"lat": 38.9, "lon": -77.0, "name": "USA", "size": 100, "color": [76, 28, 97]},
+        {"lat": 50.8, "lon": 4.4, "name": "EU", "size": 100, "color": [0, 51, 153]},
+        {"lat": 51.5, "lon": -0.1, "name": "UK", "size": 100, "color": [204, 0, 0]},
+        {"lat": 39.9, "lon": 116.4, "name": "China", "size": 100, "color": [204, 0, 0]},
+        {"lat": 1.3, "lon": 103.8, "name": "Singapore", "size": 100, "color": [204, 0, 0]},
+        {"lat": 25.2, "lon": 55.3, "name": "UAE", "size": 100, "color": [0, 102, 0]},
+        {"lat": -15.8, "lon": -47.9, "name": "Brazil", "size": 100, "color": [0, 153, 0]},
+        {"lat": 52.5, "lon": 13.4, "name": "Germany", "size": 100, "color": [0, 0, 0]},
+        {"lat": 35.7, "lon": 139.8, "name": "Japan", "size": 100, "color": [204, 0, 0]}
     ])
     
     # Create the map
     view_state = pdk.ViewState(
         latitude=20,
         longitude=0,
-        zoom=1,
-        pitch=0
+        zoom=1.5,
+        pitch=40,
+        bearing=0
     )
     
-    # Create the scatter plot layer
+    # Create the scatter plot layer with custom colors
     layer = pdk.Layer(
         "ScatterplotLayer",
         data=map_data,
         get_position=["lon", "lat"],
         get_radius="size",
-        get_fill_color=[100, 30, 150, 160],  # Purple color with transparency
+        get_fill_color="color",
         pickable=True,
-        auto_highlight=True
+        auto_highlight=True,
+        opacity=0.8
     )
     
     # Create the tooltip
     tooltip = {
         "html": "<b>{name}</b>",
-        "style": {"background": "rgba(74, 28, 97, 0.8)", "color": "white", "font-family": "sans-serif"}
+        "style": {"background": "rgba(74, 28, 97, 0.8)", "color": "white", "font-family": "sans-serif", "padding": "10px"}
     }
     
     # Render the map
@@ -145,9 +209,13 @@ elif page == "Regulation Map":
     # Show the selected region's update
     for update in updates:
         if update["Region"] == selected_region:
-            st.write(f"### {update['Region']} Regulations")
+            st.markdown(f"<div class='update-container'>", unsafe_allow_html=True)
+            st.markdown(f"### {update['Region']} Regulations")
+            st.image(update['Image'], width=400)
             st.write(f"**Latest Update:** {update['Update']}")
             st.write(f"**Date:** {update['Date']}")
+            st.write(update['Description'])
+            st.markdown("</div>", unsafe_allow_html=True)
             break
 
 elif page == "Login":
@@ -177,9 +245,36 @@ elif page == "Login":
         st.write("### Admin Panel")
         st.write("Here you can manage regulatory updates and system settings.")
         
-        # Example admin functionality
-        if st.button("Download Regulatory Reports"):
-            st.info("Reports would download here in a real application.")
+        # Add tabs for different admin functions
+        admin_tab1, admin_tab2, admin_tab3 = st.tabs(["Add Update", "Edit Updates", "System Settings"])
+        
+        with admin_tab1:
+            st.write("### Add New Regulatory Update")
+            new_region = st.selectbox("Region", options=["USA", "EU", "UK", "China", "Singapore", "UAE", "Brazil", "Germany", "Japan", "Other"])
+            new_update = st.text_input("Update Title")
+            new_description = st.text_area("Description")
+            new_date = st.date_input("Date")
+            
+            if st.button("Add Update"):
+                st.success("Update added successfully! (Simulated)")
+        
+        with admin_tab2:
+            st.write("### Edit Existing Updates")
+            edit_update = st.selectbox("Select Update to Edit", options=[f"{u['Region']}: {u['Update']}" for u in updates])
+            
+            if edit_update:
+                st.text_area("Edit Description", value=next((u["Description"] for u in updates if f"{u['Region']}: {u['Update']}" == edit_update), ""))
+                if st.button("Save Changes"):
+                    st.success("Changes saved successfully! (Simulated)")
+        
+        with admin_tab3:
+            st.write("### System Settings")
+            st.checkbox("Enable email notifications")
+            st.checkbox("Enable API access")
+            st.slider("Data retention period (days)", 30, 365, 180)
+            
+            if st.button("Save Settings"):
+                st.success("Settings saved successfully! (Simulated)")
 
 # Footer
 st.write("""
