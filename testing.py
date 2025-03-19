@@ -124,10 +124,6 @@ updates = [
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 
-# Initialize page in session state if it doesn't exist
-if 'page' not in st.session_state:
-    st.session_state.page = "Home"
-
 # Top navigation bar
 def create_top_navigation():
     # Using a container to create the navigation bar
@@ -140,27 +136,22 @@ def create_top_navigation():
             st.image("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=200&h=200&fit=crop&auto=format", width=80)
             
         with col2:
-            # Create horizontal navigation with buttons instead of HTML links
+            # Create horizontal navigation using markdown
             pages = ["Home", "Latest Updates", "Regulation Map"]
-            
-            cols = st.columns(len(pages))
-            for i, p in enumerate(pages):
-                with cols[i]:
-                    if st.button(p, key=f"nav_{p}", use_container_width=True):
-                        st.session_state.page = p
-                        st.experimental_rerun()
+            page_links = " | ".join([f"<a href='#' class='nav-item {'active' if page == 'Home' else ''}'>{p}</a>" for p in pages])
+            st.markdown(f"<div class='nav-items'>{page_links}</div>", unsafe_allow_html=True)
             
         with col3:
             if not st.session_state.logged_in:
-                if st.button("Login", key="top_login", use_container_width=True):
-                    st.session_state.page = "Login"
-                    st.experimental_rerun()
+                login_button = "<a href='#' class='login-button'>Login</a>"
+                st.markdown(f"<div style='text-align: right;'>{login_button}</div>", unsafe_allow_html=True)
+                if st.button("Login", key="top_login"):
+                    page = "Login"
             else:
-                st.write("Welcome, Admin")
-                if st.button("Logout", key="top_logout", use_container_width=True):
+                st.markdown("<div style='text-align: right;'>Welcome, Admin</div>", unsafe_allow_html=True)
+                if st.button("Logout", key="top_logout"):
                     st.session_state.logged_in = False
-                    st.session_state.page = "Home"
-                    st.experimental_rerun()
+                    page = "Home"
 
 # Create the horizontal navigation bar
 create_top_navigation()
@@ -171,13 +162,7 @@ st.markdown("<div class='header'>🌍 Global Financial Regulations Hub</div>", u
 # Sidebar for secondary navigation
 with st.sidebar:
     st.title("Navigation")
-    sidebar_page = st.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"], label_visibility="collapsed")
-    if sidebar_page != st.session_state.page:
-        st.session_state.page = sidebar_page
-        st.experimental_rerun()
-
-# Use the page from session state
-page = st.session_state.page
+    page = st.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"], label_visibility="collapsed")
 
 if page == "Home":
     st.markdown("<div class='subheader'>Stay ahead with the latest financial regulations</div>", unsafe_allow_html=True)
