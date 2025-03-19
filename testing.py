@@ -6,7 +6,7 @@ import time
 # Page configuration
 st.set_page_config(page_title="Global Financial Regulations Hub", layout="wide")
 
-# Header
+# Custom CSS
 st.markdown("""
     <style>
         .header {
@@ -14,20 +14,30 @@ st.markdown("""
             color: white;
             padding: 1rem;
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
+            border-radius: 10px;
+        }
+        .subheader {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #4a1c61;
+            margin-top: 20px;
         }
     </style>
-    <div class='header'>Global Financial Regulations Hub</div>
 """, unsafe_allow_html=True)
 
+# Header
+st.markdown("<div class='header'>🌍 Global Financial Regulations Hub</div>", unsafe_allow_html=True)
+
 # Sidebar for navigation
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/8/84/Financial_Growth_Icon.png", width=100)
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"])
 
 if page == "Home":
-    st.write("### Your Global Financial Regulation Center")
-    st.write("Stay updated with the latest financial regulations and policy changes across major economic regions.")
+    st.markdown("<div class='subheader'>Stay ahead with the latest financial regulations</div>", unsafe_allow_html=True)
+    st.image("https://images.unsplash.com/photo-1603791440384-56cd371ee9a7", use_column_width=True)
     
     # Sample regulatory updates
     updates = [
@@ -44,12 +54,10 @@ if page == "Home":
     
     # Rotating latest updates
     placeholder = st.empty()
-    for _ in range(5):
+    for _ in range(3):
         for update in updates:
             with placeholder.container():
-                st.write(f"#### {update['Region']}")
-                st.write(f"**{update['Update']}**")
-                st.write(f"📅 {update['Date']}")
+                st.info(f"#### {update['Region']}\n**{update['Update']}**\n📅 {update['Date']}")
                 time.sleep(3)
 
 elif page == "Latest Updates":
@@ -77,7 +85,7 @@ elif page == "Regulation Map":
                 'ScatterplotLayer',
                 data=map_data,
                 get_position='[lon, lat]',
-                get_color='[255, 0, 0, 160]',
+                get_color='[0, 120, 255, 160]',
                 get_radius=500000,
             )
         ]
