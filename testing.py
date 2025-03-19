@@ -66,30 +66,13 @@ elif page == "Latest Updates":
     st.dataframe(data, hide_index=True)
 
 elif page == "Regulation Map":
-    st.write("### Explore Global Regulations")
-    map_data = pd.DataFrame({
-        'lat': [40.0, 50.0, 55.0, 35.0, 1.3, 25.2, -10.0, 51.1, 48.9],
-        'lon': [-100.0, 10.0, -2.0, 105.0, 103.8, 55.3, -55.0, 10.4, 2.4],
-        'region': ['USA', 'EU', 'UK', 'China', 'Singapore', 'UAE', 'South America', 'Germany', 'France']
-    })
-
-    st.pydeck_chart(pdk.Deck(
-        map_style='mapbox://styles/mapbox/light-v9',
-        initial_view_state=pdk.ViewState(
-            latitude=20,
-            longitude=0,
-            zoom=2
-        ),
-        layers=[
-            pdk.Layer(
-                'ScatterplotLayer',
-                data=map_data,
-                get_position='[lon, lat]',
-                get_color='[0, 120, 255, 160]',
-                get_radius=500000,
-            )
-        ]
-    ))
+    st.write("### Explore Global Regulations - Interactive Rotating Globe")
+    st.components.v1.html(
+        """
+        <iframe src="https://earth.nullschool.net" width="100%" height="500px" style="border:none;"></iframe>
+        """,
+        height=500
+    )
 
 elif page == "Login":
     st.write("### User Login")
