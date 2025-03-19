@@ -35,7 +35,11 @@ if page == "Home":
         {"Region": "EU", "Update": "ECB Updates Digital Euro Framework", "Date": "March 12, 2025"},
         {"Region": "UK", "Update": "FCA Introduces Enhanced Consumer Protection Rules", "Date": "March 10, 2025"},
         {"Region": "China", "Update": "PBOC Announces New Capital Requirements for Digital Banks", "Date": "March 8, 2025"},
-        {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025"}
+        {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025"},
+        {"Region": "UAE", "Update": "DFSA Implements New FinTech Regulations", "Date": "March 3, 2025"},
+        {"Region": "South America", "Update": "Brazil Updates Securities Regulations", "Date": "March 1, 2025"},
+        {"Region": "Germany", "Update": "BaFin Introduces Stricter AML Guidelines", "Date": "February 28, 2025"},
+        {"Region": "France", "Update": "AMF Strengthens Digital Asset Regulations", "Date": "February 25, 2025"}
     ]
     
     # Rotating latest updates
@@ -49,26 +53,16 @@ if page == "Home":
                 time.sleep(3)
 
 elif page == "Latest Updates":
-    data = pd.DataFrame({
-        'Region': ['USA', 'EU', 'UK', 'China', 'Singapore'],
-        'Update': [
-            'SEC Finalizes New Climate Disclosure Rules',
-            'ECB Updates Digital Euro Framework',
-            'FCA Introduces Enhanced Consumer Protection Rules',
-            'PBOC Announces New Capital Requirements for Digital Banks',
-            'MAS Revises Digital Asset Licensing Framework'
-        ],
-        'Date': ['March 15, 2025', 'March 12, 2025', 'March 10, 2025', 'March 8, 2025', 'March 5, 2025']
-    })
+    data = pd.DataFrame(updates)
     st.write("### Latest Regulation Updates")
     st.dataframe(data, hide_index=True)
 
 elif page == "Regulation Map":
     st.write("### Explore Global Regulations")
     map_data = pd.DataFrame({
-        'lat': [40.0, 50.0, 55.0, 35.0, 1.3],
-        'lon': [-100.0, 10.0, -2.0, 105.0, 103.8],
-        'region': ['USA', 'EU', 'UK', 'China', 'Singapore']
+        'lat': [40.0, 50.0, 55.0, 35.0, 1.3, 25.2, -10.0, 51.1, 48.9],
+        'lon': [-100.0, 10.0, -2.0, 105.0, 103.8, 55.3, -55.0, 10.4, 2.4],
+        'region': ['USA', 'EU', 'UK', 'China', 'Singapore', 'UAE', 'South America', 'Germany', 'France']
     })
 
     st.pydeck_chart(pdk.Deck(
