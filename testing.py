@@ -37,19 +37,18 @@ page = st.sidebar.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "L
 
 if page == "Home":
     st.markdown("<div class='subheader'>Stay ahead with the latest financial regulations</div>", unsafe_allow_html=True)
-    st.image("https://images.unsplash.com/photo-1603791440384-56cd371ee9a7", use_column_width=True)
     
-    # Sample regulatory updates
+    # Sample regulatory updates with images
     updates = [
-        {"Region": "USA", "Update": "SEC Finalizes New Climate Disclosure Rules", "Date": "March 15, 2025"},
-        {"Region": "EU", "Update": "ECB Updates Digital Euro Framework", "Date": "March 12, 2025"},
-        {"Region": "UK", "Update": "FCA Introduces Enhanced Consumer Protection Rules", "Date": "March 10, 2025"},
-        {"Region": "China", "Update": "PBOC Announces New Capital Requirements for Digital Banks", "Date": "March 8, 2025"},
-        {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025"},
-        {"Region": "UAE", "Update": "DFSA Implements New FinTech Regulations", "Date": "March 3, 2025"},
-        {"Region": "South America", "Update": "Brazil Updates Securities Regulations", "Date": "March 1, 2025"},
-        {"Region": "Germany", "Update": "BaFin Introduces Stricter AML Guidelines", "Date": "February 28, 2025"},
-        {"Region": "France", "Update": "AMF Strengthens Digital Asset Regulations", "Date": "February 25, 2025"}
+        {"Region": "USA", "Update": "SEC Finalizes New Climate Disclosure Rules", "Date": "March 15, 2025", "Image": "https://example.com/usa.jpg"},
+        {"Region": "EU", "Update": "ECB Updates Digital Euro Framework", "Date": "March 12, 2025", "Image": "https://example.com/eu.jpg"},
+        {"Region": "UK", "Update": "FCA Introduces Enhanced Consumer Protection Rules", "Date": "March 10, 2025", "Image": "https://example.com/uk.jpg"},
+        {"Region": "China", "Update": "PBOC Announces New Capital Requirements for Digital Banks", "Date": "March 8, 2025", "Image": "https://example.com/china.jpg"},
+        {"Region": "Singapore", "Update": "MAS Revises Digital Asset Licensing Framework", "Date": "March 5, 2025", "Image": "https://example.com/singapore.jpg"},
+        {"Region": "UAE", "Update": "DFSA Implements New FinTech Regulations", "Date": "March 3, 2025", "Image": "https://example.com/uae.jpg"},
+        {"Region": "South America", "Update": "Brazil Updates Securities Regulations", "Date": "March 1, 2025", "Image": "https://example.com/brazil.jpg"},
+        {"Region": "Germany", "Update": "BaFin Introduces Stricter AML Guidelines", "Date": "February 28, 2025", "Image": "https://example.com/germany.jpg"},
+        {"Region": "France", "Update": "AMF Strengthens Digital Asset Regulations", "Date": "February 25, 2025", "Image": "https://example.com/france.jpg"}
     ]
     
     # Rotating latest updates
@@ -57,6 +56,7 @@ if page == "Home":
     for _ in range(3):
         for update in updates:
             with placeholder.container():
+                st.image(update['Image'], use_column_width=True)
                 st.info(f"#### {update['Region']}\n**{update['Update']}**\n📅 {update['Date']}")
                 time.sleep(3)
 
@@ -70,6 +70,20 @@ elif page == "Regulation Map":
     st.components.v1.html(
         """
         <iframe src="https://earth.nullschool.net" width="100%" height="500px" style="border:none;"></iframe>
+        <script>
+            const points = [
+                {lat: 40.0, lon: -100.0, label: "USA"},
+                {lat: 50.0, lon: 10.0, label: "EU"},
+                {lat: 55.0, lon: -2.0, label: "UK"},
+                {lat: 35.0, lon: 105.0, label: "China"},
+                {lat: 1.3, lon: 103.8, label: "Singapore"},
+                {lat: 25.2, lon: 55.3, label: "UAE"},
+                {lat: -10.0, lon: -55.0, label: "South America"},
+                {lat: 51.1, lon: 10.4, label: "Germany"},
+                {lat: 48.9, lon: 2.4, label: "France"}
+            ];
+            // Add code to display markers on the globe here.
+        </script>
         """,
         height=500
     )
