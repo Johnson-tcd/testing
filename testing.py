@@ -17,7 +17,6 @@ st.markdown("""
             font-size: 2.5rem;
             font-weight: bold;
             border-radius: 10px;
-            margin-bottom: 20px;
         }
         .subheader {
             text-align: center;
@@ -41,45 +40,11 @@ st.markdown("""
             font-style: italic;
             color: #666;
         }
-        .top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .nav-items {
-            display: flex;
-            gap: 20px;
-        }
-        .nav-item {
-            padding: 8px 15px;
-            text-decoration: none;
-            color: #4a1c61;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .nav-item:hover, .nav-item.active {
-            background-color: #e9ecef;
-        }
-        .login-button {
-            background-color: #6a2c91;
-            color: white !important;
-            padding: 8px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        .login-button:hover {
-            background-color: #4a1c61;
-        }
     </style>
 """, unsafe_allow_html=True)
+
+# Header
+st.markdown("<div class='header'>🌍 Global Financial Regulations Hub</div>", unsafe_allow_html=True)
 
 # Sample regulatory updates - moved to global scope with representative images
 updates = [
@@ -120,49 +85,10 @@ updates = [
      "Description": "The Financial Services Agency has strengthened regulations governing digital assets and cryptocurrency exchanges."}
 ]
 
-# Initialize session state for login status if it doesn't exist
-if 'logged_in' not in st.session_state:
-    st.session_state.logged_in = False
-
-# Top navigation bar
-def create_top_navigation():
-    # Using a container to create the navigation bar
-    nav_container = st.container()
-    
-    with nav_container:
-        col1, col2, col3 = st.columns([1, 3, 1])
-        
-        with col1:
-            st.image("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=200&h=200&fit=crop&auto=format", width=80)
-            
-        with col2:
-            # Create horizontal navigation using markdown
-            pages = ["Home", "Latest Updates", "Regulation Map"]
-            page_links = " | ".join([f"<a href='#' class='nav-item {'active' if page == 'Home' else ''}'>{p}</a>" for p in pages])
-            st.markdown(f"<div class='nav-items'>{page_links}</div>", unsafe_allow_html=True)
-            
-        with col3:
-            if not st.session_state.logged_in:
-                login_button = "<a href='#' class='login-button'>Login</a>"
-                st.markdown(f"<div style='text-align: right;'>{login_button}</div>", unsafe_allow_html=True)
-                if st.button("Login", key="top_login"):
-                    page = "Login"
-            else:
-                st.markdown("<div style='text-align: right;'>Welcome, Admin</div>", unsafe_allow_html=True)
-                if st.button("Logout", key="top_logout"):
-                    st.session_state.logged_in = False
-                    page = "Home"
-
-# Create the horizontal navigation bar
-create_top_navigation()
-
-# Header
-st.markdown("<div class='header'>🌍 Global Financial Regulations Hub</div>", unsafe_allow_html=True)
-
-# Sidebar for secondary navigation
-with st.sidebar:
-    st.title("Navigation")
-    page = st.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"], label_visibility="collapsed")
+# Sidebar for navigation
+st.sidebar.image("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=200&h=200&fit=crop&auto=format", width=100)
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Latest Updates", "Regulation Map", "Login"])
 
 if page == "Home":
     st.markdown("<div class='subheader'>Stay ahead with the latest financial regulations</div>", unsafe_allow_html=True)
@@ -218,11 +144,7 @@ elif page == "Latest Updates":
     
     # Add filter options
     st.write("### Filter Updates")
-    col1, col2 = st.columns(2)
-    with col1:
-        selected_region = st.multiselect("Filter by Region", options=list(set([u["Region"] for u in updates])))
-    with col2:
-        date_range = st.date_input("Date Range", value=[])
+    selected_region = st.multiselect("Filter by Region", options=list(set([u["Region"] for u in updates])))
     
     if selected_region:
         filtered_data = data[data["Region"].isin(selected_region)]
@@ -281,10 +203,8 @@ elif page == "Regulation Map":
     ))
 
     # Display regulatory info when a region is selected
-    region_col1, region_col2 = st.columns([1, 2])
-    with region_col1:
-        selected_region = st.selectbox("Select region for detailed regulations", 
-                                    options=[update["Region"] for update in updates])
+    selected_region = st.selectbox("Select region for detailed regulations", 
+                                 options=[update["Region"] for update in updates])
     
     # Show the selected region's update
     for update in updates:
@@ -299,33 +219,26 @@ elif page == "Regulation Map":
             break
 
 elif page == "Login":
-    login_cols = st.columns([1, 2, 1])
-    with login_cols[1]:
-        st.write("### User Login")
-        st.markdown("<div class='update-container'>", unsafe_allow_html=True)
-        
-        # Use more secure approach for authentication
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        
-        # Store valid users in a separate dictionary (in a real app, use a database)
-        valid_users = {
-            "admin": "secure_password_123",
-            "user": "user_password_456"
-        }
-        
-        login_button_col1, login_button_col2, login_button_col3 = st.columns([1, 1, 1])
-        with login_button_col2:
-            if st.button("Login", use_container_width=True):
-                if username in valid_users and password == valid_users[username]:
-                    st.session_state.logged_in = True
-                    st.success("Login successful!")
-                    st.write("Welcome to the Financial Regulations Hub admin panel!")
-                else:
-                    st.error("Invalid credentials. Please try again.")
-                    st.session_state.logged_in = False
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.write("### User Login")
+    
+    # Use more secure approach for authentication
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    
+    # Store valid users in a separate dictionary (in a real app, use a database)
+    valid_users = {
+        "admin": "secure_password_123",
+        "user": "user_password_456"
+    }
+    
+    if st.button("Login"):
+        if username in valid_users and password == valid_users[username]:
+            st.session_state.logged_in = True
+            st.success("Login successful!")
+            st.write("Welcome to the Financial Regulations Hub admin panel!")
+        else:
+            st.error("Invalid credentials. Please try again.")
+            st.session_state.logged_in = False
     
     # Show additional info only if logged in
     if st.session_state.get('logged_in', False):
